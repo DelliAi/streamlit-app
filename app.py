@@ -1,37 +1,46 @@
 import streamlit as st
+from PIL import Image
 
-# Estilo customizado com imagem de fundo
+# Carregar a imagem para o fundo
+background_image = "DALL-E_2024-12-08_21.27.24.jpg"
+
 st.markdown(
     f"""
     <style>
-    body {{
-        background-image: url("https://raw.githubusercontent.com/DelliAi/streamlit-app/main/DALL-E%202024-12-08%2021.27.24%20-%20A%20modern%20four-story%20building%20....jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        color: #f9e1cd;
-        font-family: 'Arial', sans-serif;
-    }}
-    .stApp {{
-        background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente para legibilidade */
-        padding: 20px;
-        border-radius: 10px;
-    }}
-    h1, h2, h3 {{
-        color: #FFC300;
-    }}
-    .stButton>button {{
-        background-color: #FFC300;
-        color: #000;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: bold;
-        padding: 10px 20px;
-        border: none;
-    }}
-    .stButton>button:hover {{
-        background-color: #FFA500;
-    }}
+        /* Fundo da página */
+        .stApp {{
+            background: url('data:image/png;base64,{open(background_image, "rb").read().encode("base64").decode()}');
+            background-size: cover;
+            background-attachment: fixed;
+        }}
+
+        /* Estilizar os títulos */
+        h1, h2, h3 {{
+            color: #FFC300;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }}
+
+        /* Estilizar a barra lateral */
+        .css-1d391kg { /* Sidebar */
+            background-color: rgba(20,20,20,0.9);
+            border: 2px solid #FFC300;
+            border-radius: 8px;
+        }}
+
+        /* Botões */
+        .stButton>button {{
+            background-color: #FFC300;
+            color: #000;
+            border: none;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }}
+        .stButton>button:hover {{
+            background-color: #FF5733;
+        }}
     </style>
     """,
     unsafe_allow_html=True
@@ -39,36 +48,31 @@ st.markdown(
 
 # Cabeçalho
 st.title("Amadelli Dashboard")
-st.markdown("### Bem-vindo ao sistema da Amadelli. Aqui você encontra cálculos, rastreabilidade e treinamentos personalizados.")
+st.markdown("### Bem-vindo ao sistema interativo da Amadelli. Aqui você encontra **soluções modernas** e **futurísticas**.")
 
-# Menu lateral de navegação
+# Menu lateral
 menu = st.sidebar.selectbox(
-    "Selecione uma funcionalidade:",
-    ["Cálculo de Carga", "Rastreabilidade", "Treinamentos", "Delli AI"]
+    "Escolha uma funcionalidade:",
+    ["Visão Geral", "Relatórios", "Treinamentos", "IA Assistente", "Configurações"]
 )
 
-# Seções dinâmicas
-if menu == "Cálculo de Carga":
-    st.header("Cálculo de Carga")
-    tipo_caminhao = st.selectbox(
-        "Selecione o tipo de caminhão:",
-        ["Volks 4 portas", "Volks 5 portas", "Volks 6 portas", "Volks 7 portas"]
-    )
-    quantidade_caixas = st.number_input("Quantidade de caixas:", min_value=1, step=1)
-    if st.button("Calcular"):
-        fiadas_altas = quantidade_caixas // 10
-        st.write(f"Resultado: {fiadas_altas} fiadas altas.")
+# Conteúdo Dinâmico
+if menu == "Visão Geral":
+    st.header("Visão Geral")
+    st.markdown("#### Aqui você encontra **gráficos e análises em tempo real** sobre as operações.")
 
-elif menu == "Rastreabilidade":
-    st.header("Rastreabilidade")
-    st.write("Em breve: Gráficos e relatórios em desenvolvimento.")
+elif menu == "Relatórios":
+    st.header("Relatórios")
+    st.markdown("#### Acesse relatórios detalhados e dinâmicos.")
 
 elif menu == "Treinamentos":
     st.header("Treinamentos")
-    st.write("Em breve: Vídeos, quizzes e relatórios personalizados!")
+    st.markdown("#### Explore módulos de treinamento interativos.")
 
-elif menu == "Delli AI":
-    st.header("Delli AI")
-    pergunta = st.text_input("Faça sua pergunta:")
-    if pergunta:
-        st.write(f"Resposta simulada para: {pergunta}")
+elif menu == "IA Assistente":
+    st.header("IA Assistente")
+    st.markdown("#### Converse com nossa **IA avançada** para suporte.")
+
+elif menu == "Configurações":
+    st.header("Configurações")
+    st.markdown("#### Personalize sua experiência.")
