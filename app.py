@@ -19,7 +19,7 @@ def set_background(image_path):
         unsafe_allow_html=True
     )
 
-set_background("DALL-E_2024-12-08_21.27.24_-_A_modern_four-story_building_with_a_geometric_facade_featuring_predominant_tones_of_yellow,_black,_and_light_gray_in_large_rectangular_blocks,_creatin.webp")
+
 
 
 # Cabeçalho Principal
