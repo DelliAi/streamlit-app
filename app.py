@@ -37,4 +37,5 @@ menu = st.sidebar.selectbox(
 
 # Seções dinâmicas
 if menu == "Cálculo de Carga":
-    st.header("
+    st.header ("Cálculo de Carga")
+
