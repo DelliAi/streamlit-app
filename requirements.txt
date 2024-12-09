@@ -1,2 +1,7 @@
 streamlit
 openai
+pandas
+sqlite3
+st-aggrid
+plotly
+altair
