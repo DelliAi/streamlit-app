@@ -1,58 +1,96 @@
 import streamlit as st
 
-# CSS Customizado
+# CSS Customizado para um layout mais moderno
 st.markdown("""
     <style>
+        /* Corpo geral */
         body {
-            background-color: #040404;
+            background-color: #121212;
             color: #f9e1cd;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
-        h1, h2, h3, h4, h5 {
-            color: #FFC300;
-        }
-        .stButton>button {
-            background-color: #FFC300;
-            color: #000;
-            font-size: 16px;
+
+        /* Cabeçalho principal */
+        .main-header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(90deg, #FFC300, #FFD966);
+            color: #121212;
+            font-size: 28px;
             border-radius: 8px;
-            padding: 10px 20px;
-            border: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .sidebar .sidebar-content {
-            background-color: #1a1a1a;
-            color: #f9e1cd;
-        }
+
+        /* Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #1a1a1a;
-            padding: 10px 20px;
-            border-bottom: 2px solid #FFC300;
+            background-color: #1e1e1e;
+            padding: 15px 30px;
+            border-bottom: 3px solid #FFC300;
+            margin-bottom: 20px;
         }
+
         .navbar a {
             color: #FFC300;
             text-decoration: none;
+            font-weight: bold;
             margin: 0 15px;
-            font-size: 18px;
+            transition: color 0.3s ease;
         }
+
         .navbar a:hover {
-            color: #f9e1cd;
+            color: #FFD966;
         }
+
+        /* Cartões de funcionalidades */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             padding: 20px;
         }
+
         .grid-item {
-            background-color: #1a1a1a;
+            background-color: #1e1e1e;
             color: #f9e1cd;
             border: 2px solid #FFC300;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Botões */
+        .stButton>button {
+            background: linear-gradient(90deg, #FFC300, #FFD966);
+            color: #121212;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .stButton>button:hover {
+            background: #FFD966;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #FFC300;
+            border-top: 2px solid #FFC300;
+            margin-top: 40px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -60,7 +98,7 @@ st.markdown("""
 # Navbar
 st.markdown("""
     <div class="navbar">
-        <div><b>Amadelli</b></div>
+        <div><b>Amadelli Dashboard</b></div>
         <div>
             <a href="#treinamentos">Treinamentos</a>
             <a href="#ia">Assistente de IA</a>
@@ -71,19 +109,47 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Cabeçalho principal
-st.title("Amadelli Dashboard")
-st.markdown("### Bem-vindo ao sistema da Amadelli. Aqui você encontra cálculos, rastreabilidade e treinamentos personalizados.")
+st.markdown('<div class="main-header">Bem-vindo ao Sistema da Amadelli!</div>', unsafe_allow_html=True)
 
-# Menu principal
+# Layout com seções interativas em cartões
+st.markdown("""
+    <div class="grid-container">
+        <div class="grid-item">
+            <h3>Cálculo de Carga</h3>
+            <p>Simule o carregamento ideal com base no tipo de caminhão.</p>
+        </div>
+        <div class="grid-item">
+            <h3>Rastreabilidade</h3>
+            <p>Monitore turnos e melhore os processos de produção.</p>
+        </div>
+        <div class="grid-item">
+            <h3>Treinamentos</h3>
+            <p>Acesse cursos personalizados para sua área de atuação.</p>
+        </div>
+        <div class="grid-item">
+            <h3>Relatórios</h3>
+            <p>Visualize a produtividade e alcance de metas.</p>
+        </div>
+        <div class="grid-item">
+            <h3>Delli AI</h3>
+            <p>Obtenha respostas rápidas e soluções com a inteligência artificial personalizada.</p>
+        </div>
+        <div class="grid-item">
+            <h3>Painel do Funcionário</h3>
+            <p>Acompanhe seu progresso e metas alcançadas.</p>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+
+# Funcionalidades interativas dinâmicas
 menu = st.sidebar.selectbox(
     "Selecione uma funcionalidade:",
     ["Cálculo de Carga", "Rastreabilidade", "Treinamentos", "Delli AI", "Relatórios", "Painel do Funcionário"]
 )
 
-# Cálculo de Carga
+# Conteúdo dinâmico baseado no menu selecionado
 if menu == "Cálculo de Carga":
     st.header("Cálculo de Carga")
-    st.markdown("**Simule o carregamento ideal com base na capacidade do caminhão.**")
     tipo_caminhao = st.selectbox(
         "Selecione o tipo de caminhão:",
         ["Volks 4 portas", "Volks 5 portas", "Volks 6 portas", "Volks 7 portas"]
@@ -92,70 +158,27 @@ if menu == "Cálculo de Carga":
     if st.button("Calcular"):
         fiadas_altas = quantidade_caixas // 10
         caixas_restantes = quantidade_caixas % 10
-        st.success(f"**Resultado:** {fiadas_altas} fiadas altas e {caixas_restantes} caixas restantes.")
+        st.success(f"{fiadas_altas} fiadas altas e {caixas_restantes} caixas restantes.")
 
-# Rastreabilidade
 elif menu == "Rastreabilidade":
     st.header("Rastreabilidade")
-    st.markdown("""
-        ### Monitoramento e Melhorias
-        Veja relatórios dinâmicos sobre os turnos e identifique pontos de melhoria na produção.
-    """)
-    turno = st.selectbox("Selecione o turno:", ["Manhã", "Tarde", "Noite"])
-    st.markdown(f"**Relatório do Turno {turno}:**")
-    if turno == "Manhã":
-        st.write("Produção dentro dos padrões. Nenhum problema detectado.")
-    elif turno == "Tarde":
-        st.write("Alguns atrasos no envase detectados. Verifique a seção 3.")
-    elif turno == "Noite":
-        st.write("Turno com menor produtividade. Ajustes necessários.")
+    st.write("Aqui você monitora os processos de produção e identifica melhorias.")
 
-# Treinamentos
 elif menu == "Treinamentos":
     st.header("Treinamentos")
-    st.markdown("**Explore cursos e relatórios personalizados.**")
-    st.markdown("""
-        <div class="grid-container">
-            <div class="grid-item">✔️ Introdução à Rastreabilidade</div>
-            <div class="grid-item">📊 Gerenciamento de Turnos</div>
-            <div class="grid-item">🔧 Manutenção de Máquinas</div>
-            <div class="grid-item">💡 Liderança para Supervisores</div>
-        </div>
-    """, unsafe_allow_html=True)
+    st.write("Explore nossos treinamentos e cursos personalizados.")
 
-# Delli AI
 elif menu == "Delli AI":
-    st.header("Assistente de IA")
-    st.markdown("**Interaja com a Delli AI para obter respostas e insights personalizados.**")
-    pergunta = st.text_input("Faça sua pergunta:")
-    if st.button("Perguntar"):
-        st.write(f"**Resposta simulada para:** {pergunta}")
+    st.header("Delli AI")
+    st.text_input("Pergunte algo à Delli AI:")
 
-# Relatórios
 elif menu == "Relatórios":
     st.header("Relatórios")
-    st.markdown("### Dados de Produtividade e Metas")
-    st.markdown("""
-        **Gráficos Interativos:**
-        - Produtividade por Turno
-        - Metas Alcançadas
-        - Atrasos por Semana
-    """)
-    st.line_chart([10, 20, 30, 40, 50])  # Simulação de dados
+    st.line_chart([10, 20, 30, 40, 50])
 
-# Painel do Funcionário
 elif menu == "Painel do Funcionário":
     st.header("Painel do Funcionário")
-    st.markdown("**Acompanhe seu desempenho e metas.**")
-    st.markdown("""
-        ### Resumo:
-        - **Nome:** João da Silva
-        - **Cargo:** Operador de Máquinas
-        - **Produtividade:** 85%
-        - **Metas Alcançadas:** 12/15
-    """)
-    st.progress(85)
+    st.progress(70)
 
-# Rodapé
-st.markdown("---")
-st.markdown("© 2024 Amadelli Alimentos. Todos os direitos reservados.")
+# Footer
+st.markdown('<div class="footer">© 2024 Amadelli Alimentos. Todos os direitos reservados.</div>', unsafe_allow_html=True)
