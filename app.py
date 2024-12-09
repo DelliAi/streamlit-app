@@ -1040,5 +1040,92 @@ st.markdown("""
     🎉 Obrigado por usar o sistema Amadelli Dashboard! Aproveite as funcionalidades e melhore continuamente sua experiência.
 """)
 
+import sqlite3
+import pandas as pd
+from st_aggrid import AgGrid
+import plotly.express as px
+import altair as alt
+
+# Configuração do banco de dados
+def create_database():
+    conn = sqlite3.connect("amadelli.db")
+    cursor = conn.cursor()
+    
+    # Tabela para relatórios
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS reports (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        data TEXT NOT NULL
+    )
+    """)
+    
+    # Tabela para imagens
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        path TEXT NOT NULL
+    )
+    """)
+    
+    conn.commit()
+    conn.close()
+
+# Função para inserir dados
+def insert_data():
+    conn = sqlite3.connect("amadelli.db")
+    cursor = conn.cursor()
+    
+    # Inserindo dados de exemplo
+    cursor.execute("INSERT INTO reports (title, data) VALUES ('Relatório de Vendas', 'Vendas aumentaram 20% este mês.')")
+    cursor.execute("INSERT INTO images (name, path) VALUES ('Fachada', './DALL-E_2024-12-08_21.27.24.webp')")
+    
+    conn.commit()
+    conn.close()
+
+# Função para carregar dados
+def load_data():
+    conn = sqlite3.connect("amadelli.db")
+    df_reports = pd.read_sql_query("SELECT * FROM reports", conn)
+    df_images = pd.read_sql_query("SELECT * FROM images", conn)
+    conn.close()
+    return df_reports, df_images
+
+# Criação e inserção inicial no banco
+create_database()
+insert_data()
+
+# Dados do banco
+df_reports, df_images = load_data()
+
+# Exemplo de uso no app
+def display_reports():
+    st.subheader("Relatórios")
+    AgGrid(df_reports)
+
+def display_charts():
+    st.subheader("Gráficos de Desempenho")
+    chart = alt.Chart(pd.DataFrame({
+        'Categoria': ['Categoria A', 'Categoria B', 'Categoria C'],
+        'Valor': [30, 70, 50]
+    })).mark_bar().encode(
+        x='Categoria',
+        y='Valor'
+    )
+    st.altair_chart(chart, use_container_width=True)
+
+def display_images():
+    st.subheader("Galeria de Imagens")
+    for _, row in df_images.iterrows():
+        st.image(row['path'], caption=row['name'], use_column_width=True)
+
+# Chamadas das funções no app principal
+if menu == "Relatórios":
+    display_reports()
+elif menu == "Treinamentos":
+    display_charts()
+elif menu == "Configurações":
+    display_images()
 
 
