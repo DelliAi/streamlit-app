@@ -1040,7 +1040,17 @@ st.markdown("""
     🎉 Obrigado por usar o sistema Amadelli Dashboard! Aproveite as funcionalidades e melhore continuamente sua experiência.
 """)
 
-import sqlite3
+import pandas as pd
+
+# Para salvar dados:
+data = {'coluna1': [1, 2, 3], 'coluna2': ['a', 'b', 'c']}
+df = pd.DataFrame(data)
+df.to_csv('dados.csv', index=False)
+
+# Para carregar dados:
+df = pd.read_csv('dados.csv')
+print(df)
+
 import pandas as pd
 from st_aggrid import AgGrid
 import plotly.express as px
