@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 from PIL import Image
 import base64
 
@@ -69,7 +69,7 @@ elif menu == "Delli AI":
     placeholder.header("Assistente IA")
     placeholder.markdown("Converse com a IA Amadelli para suporte instantâneo.")
 
-elif elif menu == "Delli AI":
+elif menu == "Delli AI":
     # Importar a biblioteca OpenAI se ainda não estiver importada
     import openai
 
