@@ -42,7 +42,7 @@ st.markdown("### Bem-vindo ao sistema mais avançado da **Amadelli Food Service*
 # Barra de Navegação Lateral
 menu = st.sidebar.radio(
     "Menu de Navegação",
-    ["Visão Geral", "Relatórios", "Treinamentos", "Assistente IA", "Configurações"]
+    ["Visão Geral", "Relatórios", "Treinamentos", "Delli IA", "Configurações"]
 )
 
 # Placeholder para conteúdo dinâmico
@@ -65,18 +65,53 @@ elif menu == "Treinamentos":
     placeholder.header("Treinamentos")
     placeholder.markdown("Participe de treinamentos interativos para aperfeiçoar suas habilidades.")
 
-elif menu == "Assistente IA":
+elif menu == "Delli AI":
     placeholder.header("Assistente IA")
     placeholder.markdown("Converse com a IA Amadelli para suporte instantâneo.")
 
-elif menu == "Configurações":
-    placeholder.header("Configurações")
-    placeholder.markdown("Personalize sua experiência com o dashboard.")
+elif elif menu == "Delli AI":
+    # Importar a biblioteca OpenAI se ainda não estiver importada
+    import openai
 
-import time
-import numpy as np
-import pandas as pd
-import plotly.express as px
+    # Configuração da chave da API da OpenAI
+    openai.api_key = st.secrets["openai_api_key"]
+
+    # Função para gerar resposta personalizada
+    def delli_ai_resposta(pergunta):
+        try:
+            # Prompt personalizado para treinar o chatbot
+            prompt = f"""
+            Você é a Delli AI, uma inteligência artificial exclusiva da Amadelli. Seu objetivo é ajudar funcionários, franqueados e clientes com informações sobre:
+            - A Amadelli (processos internos, rastreabilidade, treinamentos, etc.)
+            - Indicadores de desempenho do aplicativo
+            - Soluções de problemas relacionados ao uso do sistema
+            - Qualquer dúvida sobre a interface do app ou questões técnicas.
+
+            Seja sempre amigável, clara e útil. Aqui está a pergunta do usuário:
+            {pergunta}
+            """
+            response = openai.Completion.create(
+                engine="text-davinci-003",
+                prompt=prompt,
+                max_tokens=200,
+                temperature=0.7,
+            )
+            return response.choices[0].text.strip()
+        except Exception as e:
+            return f"Erro na Delli AI: {str(e)}"
+
+    # Interface do chatbot no Streamlit
+    st.title("Delli AI - Assistente Exclusiva da Amadelli")
+    st.markdown("Pergunte qualquer coisa sobre a Amadelli ou o sistema, e a Delli AI está aqui para ajudar!")
+
+    # Campo de entrada para o usuário
+    pergunta = st.text_input("Digite sua pergunta:")
+
+    # Geração de resposta
+    if pergunta:
+        with st.spinner("Delli AI está pensando..."):
+            resposta = delli_ai_resposta(pergunta)
+            st.markdown(f"**Delli AI:** {resposta}")
 
 # Função para animações simples no título
 def animated_title():
